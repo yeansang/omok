@@ -3,16 +3,16 @@ package netGame;
 class Piece{
 	int x,y;
 	boolean color = false;
-	boolean visable = false;
+	boolean visible = false;
 	
 	public Piece(int x, int y, boolean color){
 		this.x = x; this.y = y; this.color = color;
 	}
 	public void blackTic(){
-		this.color=true; this.visable=true;
+		this.color=true; this.visible=true;
 	}
 	public void whiteTic(){
-		this.color=false; this.visable=true;
+		this.color=false; this.visible=true;
 	}
 }
 
@@ -32,8 +32,8 @@ public class gameEngine{
 	}
 	//gameInput 판에 돌을 놓는다. 만약 돌의 위치가 잘못되면 false리턴.
 	public boolean gameInput(int x, int y, boolean black){
-		if(black==true){ pane[x][y].blackTic(); return true; }
-		if(black==false){ pane[x][y].whiteTic(); return true; }
+		if((black==true)&&(pane[x][y].visible==false)){ pane[x][y].blackTic(); return true; }
+		if(black==false&&(pane[x][y].visible==false)){ pane[x][y].whiteTic(); return true; }
 		if(x<0||y<0||x>paneX||y>paneY) return false;
 		return false;
 	}
@@ -41,46 +41,40 @@ public class gameEngine{
 	public boolean winningCheck(boolean black){
 		for(int i=0;i<paneY;i++){
 			for(int j=0;j<paneX;j++){
-				if((pane[j][i].color==black)&&(pane[j][i].visable==true)){
+				if((pane[j][i].color==black)&&(pane[j][i].visible==true)){
 					int count = 1;
 					while(true){ //오른쪽으로 5개 
 						
 						if(count==5) return true;
 						if(j+count>paneX||i+count>paneY) break;
-						if(!((pane[j+count][i].color==black)&&(pane[j+count][i].visable==true))) break;
+						if(!((pane[j+count][i].color==black)&&(pane[j+count][i].visible==true))) break;
 						count++;
 						
-						System.out.println("count"+count+","+j+","+i+","+black+","+1);
 					}
 					count = 1;
 					while(true){ //오른쪽 대각선으로 5개 
 						
 						if(count==5) return true;
 						if(j+count>paneX||i+count>paneY) break;
-						if(!((pane[j+count][i+count].color==black)&&(pane[j+count][i+count].visable==true))) break;
+						if(!((pane[j+count][i+count].color==black)&&(pane[j+count][i+count].visible==true))) break;
 						count++;
 						
-						System.out.println("count"+count+","+j+","+i+","+black+","+2);
 					}
 					count = 1;
 					while(true){ //아래쪽으로 5개 
 						
 						if(count==5) return true;
 						if(j+count>paneX||i+count>paneY) break;
-						if(!((pane[j][i+count].color==black)&&(pane[j][i+count].visable==true))) break;
+						if(!((pane[j][i+count].color==black)&&(pane[j][i+count].visible==true))) break;
 						count++;
-
-						System.out.println("count"+count+","+j+","+i+","+black+","+3);
 					}
 					count = 1;
 					while(true){ //왼쪽 대각선 으로 5개 
 						
 						if(count==5) return true;
 						if(j-count<0||i-count<0) break;
-						if(!((pane[j-count][i-count].color==black)&&(pane[j-count][i-count].visable==true))) break;
+						if(!((pane[j-count][i-count].color==black)&&(pane[j-count][i-count].visible==true))) break;
 						count++;
-
-						System.out.println("count"+count+","+j+","+i+","+black+","+4);
 					}
 					count = 1;
 				}
