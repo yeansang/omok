@@ -1,41 +1,29 @@
 package netGame;
 
-import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
+import java.util.StringTokenizer;
 
-public class GameServer {
-	
-	ServerSocket serverSocket;
+public class GameClient {
 	Socket socket;
-	DataInputStream in; 
+	DataInputStream in;
 	DataOutputStream out;
 	
-
-	public GameServer(int SOKET){
+	public GameClient(String ip, int SOCKET){
 		try{
-			serverSocket = new ServerSocket(SOKET);
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	
-	public boolean waiting(){
-		try{
-			System.out.println("클라이언트 접속 대기 중...");
-			socket = serverSocket.accept(); // 서버소켓으로부터 소켓 객체 가져오기
-
-			System.out.println(socket.getInetAddress() + "가 접속되었습니다.");
+			socket = new Socket(ip, SOCKET);
 			in = new DataInputStream(socket.getInputStream());
 			out = new DataOutputStream(socket.getOutputStream());
-			return true;
-		}catch(Exception e){
+		}catch (Exception e){
 			e.printStackTrace();
-			return false;
-		}
-		
+		} 
 	}
-	
 	public Piece getPoint(){
 		while (in != null) {
             try {
@@ -58,4 +46,15 @@ public class GameServer {
 			e.printStackTrace();
 		}
 	}
+	
+	public boolean closeClient(){
+		try{
+			socket.close();
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 }

@@ -22,15 +22,28 @@ class chessL implements ActionListener {
 	
 	gameEngine in;
 	boolean color;
+	boolean toggle = false;
+	static PButton b = new PButton(100,100);
 	public chessL(gameEngine e, boolean color){
 		in = e; this.color = color;
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		PButton b = (PButton)e.getSource();
+		b = (PButton)e.getSource();
+		toggle = true;
 		//System.out.println(b.x+" "+b.y);
-		in.gameInput(b.x, b.y, color);
+		//in.gameInput(b.x, b.y, color);
 	}
+	
+	public Piece returnPoint(){
+		if(toggle){
+			toggle = false;
+			return (new Piece(b.x, b.y, true));
+		}else{
+			return null;
+		}
+	}
+	
 }
 
 
@@ -45,31 +58,35 @@ public class gameFrame extends JFrame {
 	gameEngine in;
 	PButton[][] arr;
 	int x, y;
+	chessL cl;
+	JLabel win;
 	public gameFrame(gameEngine e) {
 		in = e;
 		int X = e.paneX;
 		int Y = e.paneY;
-		setTitle("오목 판");
-		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		Container con = getContentPane();
-		
+		Container con2 = getContentPane();
+		con2.setLayout(new BorderLayout());
+		JPanel con = new JPanel();
+		win = new JLabel("게임중...");
 		con.setLayout(new GridLayout(X,Y));
 		
 		arr = new PButton[e.paneX][e.paneY];
+		cl = new chessL(e, true);
 		
 		for(int i=0;i<e.paneX;i++){
 			for(int j=0;j<e.paneY;j++){
 				arr[i][j] = new PButton(i, j);
 				arr[i][j].setOpaque(true);
 				arr[i][j].setBackground(Color.LIGHT_GRAY);
-				arr[i][j].addActionListener(new chessL(e, true));
+				arr[i][j].addActionListener(cl);
 				//아이콘 삽입
 				con.add(arr[i][j]);
 			}
 		}
+		con2.add(con, BorderLayout.CENTER);
+		con2.add(win, BorderLayout.SOUTH);
 		setSize(500,500);
 		setVisible(true);
 		repaint();

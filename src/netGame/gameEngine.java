@@ -32,9 +32,9 @@ public class gameEngine{
 	}
 	//gameInput 판에 돌을 놓는다. 만약 돌의 위치가 잘못되면 false리턴.
 	public boolean gameInput(int x, int y, boolean black){
+		if(x<0||y<0||x>paneX||y>paneY) return false;
 		if((black==true)&&(pane[x][y].visible==false)){ pane[x][y].blackTic(); return true; }
 		if(black==false&&(pane[x][y].visible==false)){ pane[x][y].whiteTic(); return true; }
-		if(x<0||y<0||x>paneX||y>paneY) return false;
 		return false;
 	}
 	 
