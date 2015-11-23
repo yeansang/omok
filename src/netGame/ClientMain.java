@@ -1,12 +1,18 @@
 package netGame;
 
+import java.util.Scanner;
+
 public class ClientMain {
 	public static void main(String[] args){
 		gameEngine e = new gameEngine();
 		gameFrame h = new gameFrame(e);
-		GameClient client = new GameClient("127.0.0.1", 8080);
-		Piece temp;
 		h.setTitle("오목 Client");
+		Scanner s = new Scanner(System.in);
+		h.win.setText("커맨드 창에 ip 주소 입력");
+		GameClient client = new GameClient(s.nextLine(), 8080);
+		s.close();
+		Piece temp;
+		h.win.setText("게임중...");
 		
 		while(true){
 			boolean d = true;
@@ -24,7 +30,7 @@ public class ClientMain {
 			}
 			if(e.winnerChecker()!=null){
 				System.out.println(e.winnerChecker());
-				h.win.setText(e.winnerChecker()+"Win!!");
+				h.win.setText(e.winnerChecker()+" Win!!");
 				h.view();
 				break;
 			}
@@ -43,10 +49,11 @@ public class ClientMain {
 				}
 				if(e.winnerChecker()!=null){
 					System.out.println(e.winnerChecker());
-					h.win.setText(e.winnerChecker()+"Win!!");
+					h.win.setText(e.winnerChecker()+" Win!!");
 					h.view();
 					break;
 				}
+				
 			}
 			client.closeClient();
 		}

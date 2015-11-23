@@ -3,10 +3,17 @@ package netGame;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 class PButton extends JButton{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	int x, y;
 	public PButton(String e, int x, int y){
 		super(e);
@@ -52,8 +59,9 @@ public class gameFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	ImageIcon white = new ImageIcon("res/white.gif");
-	ImageIcon black = new ImageIcon("res/black.gif");
+	
+	BufferedImage wl, bl;
+	ImageIcon white, black;
 	
 	gameEngine in;
 	PButton[][] arr;
@@ -61,6 +69,15 @@ public class gameFrame extends JFrame {
 	chessL cl;
 	JLabel win;
 	public gameFrame(gameEngine e) {
+		try {
+			wl = ImageIO.read(getClass().getResource("/white.gif"));
+			bl = ImageIO.read(getClass().getResource("/black.gif"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		white = new ImageIcon(wl);
+		black = new ImageIcon(bl);
 		in = e;
 		int X = e.paneX;
 		int Y = e.paneY;
@@ -92,8 +109,7 @@ public class gameFrame extends JFrame {
 		repaint();
 		
 	}
-	public void paint(Graphics g){
-	}
+	
 	//µ¹ Ç¥½Ã
 	public void view(){
 		for(int i=0;i<in.paneX;i++){

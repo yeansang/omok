@@ -7,9 +7,11 @@ public class SeverMain {
 		GameServer server = new GameServer(8080);
 		Piece temp;
 		h.setTitle("오목 Server");
+		h.win.setText("연결대기중");
 		
 		server.waiting();
 		System.out.println("연결됨");
+		h.win.setText("게임중...");
 		
 		
 		while(true){
@@ -44,10 +46,11 @@ public class SeverMain {
 			}
 			if(e.winnerChecker()!=null){
 				System.out.println(e.winnerChecker());
-				h.win.setText(e.winnerChecker()+"Win!!");
+				h.win.setText(e.winnerChecker()+" Win!!");
 				h.view();
 				break;
 			}
+			
 		}
 	}
 }
