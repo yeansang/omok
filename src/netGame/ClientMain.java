@@ -6,13 +6,13 @@ public class ClientMain {
 	public static void main(String[] args){
 		gameEngine e = new gameEngine();
 		gameFrame h = new gameFrame(e);
-		h.setTitle("¿À¸ñ Client");
+		h.setTitle("ì˜¤ëª© Client");
 		Scanner s = new Scanner(System.in);
-		h.win.setText("Ä¿¸Çµå Ã¢¿¡ ip ÁÖ¼Ò ÀÔ·Â");
+		h.win.setText("ì»¤ë§¨ë“œ ì°½ì— ip ì£¼ì†Œ ì…ë ¥");
 		GameClient client = new GameClient(s.nextLine(), 8080);
 		s.close();
 		Piece temp;
-		h.win.setText("°ÔÀÓÁß...");
+		h.win.setText("in game...");
 		
 		while(true){
 			boolean d = true;
